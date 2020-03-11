@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 from mediafile import MediaFile
 from io import BytesIO
 from numpy import mean 
-import pprint
+
 from PIL import ImageFilter, ImageEnhance
 
 
