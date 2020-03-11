@@ -18,6 +18,13 @@ disp = ST7735.ST7735(
     spi_speed_hz=20000000
 )
 
+disp2 = ST7789.ST7789(
+    port=0,
+    cs=ST7789.BG_SPI_CS_FRONT,  # BG_SPI_CSB_BACK or BG_SPI_CS_FRONT
+    dc=9,
+    backlight=13,               # 18 for back BG slot, 19 for front BG slot.
+    spi_speed_hz=80 * 1000 * 1000
+)
 
 WIDTH = disp.width
 HEIGHT = disp.height
@@ -30,5 +37,7 @@ draw.rectangle((0, 0, 160, 128), (0, 0, 0))
 disp.display(img)
 '''
 disp.reset()
-#disp.set_backlight(False)
+disp.set_backlight(False)
 
+disp2.reset()
+disp2.set_backlight(False)
