@@ -8,6 +8,8 @@ Can also be used with a 160*128 ST7735 TFT.
 
 ### Assumptions.
 
+**You can SSH into your RPI, enter commands at the shell prompt, and use the nano editor.**
+
 **Your moode installation works and produces audio**
 
 If your pirate audio board doesn't output anything
