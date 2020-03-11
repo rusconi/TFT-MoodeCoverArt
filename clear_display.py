@@ -1,9 +1,7 @@
 
 import ST7735
+import ST7789
 from PIL import Image, ImageDraw
-#from PIL import ImageFont
-
-
 
 disp = ST7735.ST7735(
     port=0,
@@ -18,6 +16,12 @@ disp = ST7735.ST7735(
     spi_speed_hz=20000000
 )
 
+img = Image.new('RGB', (240, 240), color=(0, 0, 0))
+draw = ImageDraw.Draw(img)
+draw.rectangle((0, 0, 160, 128), (0, 0, 0))
+disp.display(img)
+
+disp.set_backlight(False)
 disp2 = ST7789.ST7789(
     port=0,
     cs=ST7789.BG_SPI_CS_FRONT,  # BG_SPI_CSB_BACK or BG_SPI_CS_FRONT
@@ -26,18 +30,12 @@ disp2 = ST7789.ST7789(
     spi_speed_hz=80 * 1000 * 1000
 )
 
-WIDTH = disp.width
-HEIGHT = disp.height
+draw2 = ImageDraw.Draw(img)
 
-'''
-#disp.command(0x28)
-img = Image.new('RGB', (WIDTH, HEIGHT), color=(0, 0, 0))
-draw = ImageDraw.Draw(img)
-draw.rectangle((0, 0, 160, 128), (0, 0, 0))
+draw.rectangle((0, 0, 240, 240), (0, 0, 0))
 disp.display(img)
-'''
-disp.reset()
 disp.set_backlight(False)
 
-disp2.reset()
+draw2.rectangle((0, 0, 240, 240), (0, 0, 0))
+disp2.display(img)
 disp2.set_backlight(False)
