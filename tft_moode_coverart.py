@@ -114,6 +114,7 @@ def getMoodeMetadata(filename):
 def get_cover(metaDict):
 
     cover = None
+    cover = Image.open(script_path + '/images/default-cover-v6.jpg')
     covers = ['Cover.jpg', 'cover.jpg', 'Cover.jpeg', 'cover.jpeg', 'Cover.png', 'cover.png', 'Cover.tif', 'cover.tif', 'Cover.tiff', 'cover.tiff',
 		'Folder.jpg', 'folder.jpg', 'Folder.jpeg', 'folder.jpeg', 'Folder.png', 'folder.png', 'Folder.tif', 'folder.tif', 'Folder.tiff', 'folder.tiff']
     if metaDict['radio'] is True:
@@ -134,11 +135,6 @@ def get_cover(metaDict):
                         if path.exists(cp):
                             cover = Image.open(cp)
                             return cover
-                        else:
-                            cover = Image.open(script_path + '/images/default-cover-v6.jpg')
-
-
-
     return cover
 
 
@@ -179,17 +175,14 @@ def main():
 
         
         mn = 50
-        if cover != None:
+        #if cover != None:
             #enhancer = ImageEnhance.Color(cover)
             #cover = enhancer.enhance(0.25)
-            img.paste(cover.resize((WIDTH,HEIGHT), Image.LANCZOS).filter(ImageFilter.GaussianBlur).convert('RGB'))
+        img.paste(cover.resize((WIDTH,HEIGHT), Image.LANCZOS).filter(ImageFilter.GaussianBlur).convert('RGB'))
             
            
-            im_stat = ImageStat.Stat(cover) 
-            
-            im_mean = im_stat.mean
-            r = im_mean[0]
-            
+        im_stat = ImageStat.Stat(cover) 
+        im_mean = im_stat.mean
         mn = mean(im_mean)
         
         #txt_col = (255-int(im_mean[0]), 255-int(im_mean[1]), 255-int(im_mean[2]))
