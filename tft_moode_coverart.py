@@ -38,7 +38,7 @@ if DRIVER == 'ST7735':
         port=0,
         cs=0,   #ST7735.BG_SPI_CS_FRONT,  # BG_SPI_CSB_BACK or BG_SPI_CS_FRONT
         dc=17,
-        #backlight=22,               
+        backlight=22,               
         rst=27,
         width=128,
         height=160,
