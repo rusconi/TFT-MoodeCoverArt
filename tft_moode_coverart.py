@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageColor, ImageFont, ImageStat
 import time
 import ST7789
-import ST7735
+#import ST7735
 import musicpd
 import os
 import os.path

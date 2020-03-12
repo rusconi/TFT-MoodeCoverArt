@@ -1,5 +1,5 @@
 
-import ST7735
+#import ST7735
 import ST7789
 from PIL import Image, ImageDraw
 
