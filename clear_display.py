@@ -34,7 +34,8 @@ if DRIVER == 'ST7735':
         invert=False,
         spi_speed_hz=40000000
     )
-    
+
+disp.begin()
 img = Image.new('RGB', (240, 240), color=(0, 0, 0))
 draw = ImageDraw.Draw(img)
 draw.rectangle((0, 0, 240, 240), (0, 0, 0))
