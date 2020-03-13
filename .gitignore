@@ -1,0 +1,6 @@
+
+backlight.py
+backlight.sh
+install_service.sh
+remove_service.sh
+tft-moodecoverart.service
