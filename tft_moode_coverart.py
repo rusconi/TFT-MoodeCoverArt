@@ -44,7 +44,7 @@ if DRIVER == 'ST7735':
         height=160,
         rotation=90,
         invert=False,
-        spi_speed_hz=40000000
+        spi_speed_hz=4000000
     )
     
 # Initialize display.
