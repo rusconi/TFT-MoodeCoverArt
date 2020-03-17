@@ -69,22 +69,6 @@ img = Image.new('RGB', (240, 240), color=(0, 0, 0, 25))
 im3 = Image.new('RGB', (160, 128), color=(0, 0, 0, 25))
 om4 = Image.new('RGB', (128, 128), color=(0, 0, 0, 25))
 
-'''
-play_icons = Image.open(script_path + '/images/controls-play.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-play_icons_dark = Image.open(script_path + '/images/controls-play-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-
-pause_icons = Image.open(script_path + '/images/controls-pause.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-pause_icons_dark = Image.open(script_path + '/images/controls-pause-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-
-vol_icons = Image.open(script_path + '/images/controls-vol.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-vol_icons_dark = Image.open(script_path + '/images/controls-vol-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-
-bt_back = Image.open(script_path + '/images/bta.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-ap_back = Image.open(script_path + '/images/airplay.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-jp_back = Image.open(script_path + '/images/jack.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-sp_back = Image.open(script_path + '/images/spotify.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-sq_back = Image.open(script_path + '/images/squeeze.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-'''
 
 draw = ImageDraw.Draw(img, 'RGBA')
 
@@ -100,13 +84,15 @@ def isServiceActive(service):
         process = subprocess.run(['systemctl','is-active',service], check=False, stdout=subprocess.PIPE, universal_newlines=True)
         output = process.stdout
         stat = output[:6]
-
+        
         if stat == 'active':
             waiting = False
             active = True
+            
 
         if count > 29:
             waiting = False
+            
 
         count += 1
         time.sleep(1)
@@ -207,7 +193,7 @@ def main():
         time_top = 174
     '''
     act_mpd = isServiceActive('mpd')
-
+    
     if act_mpd == True:
         while True:
             client = musicpd.MPDClient()       # create client object
@@ -242,33 +228,7 @@ def main():
             if mn < 80:
                 txt_col = (200,200,200)
             
-            '''
-            if (moode_meta['source'] == 'library') or (moode_meta['source'] == 'radio'):
-
-                if (FULL == False and DRIVER == 'ST7735') or DRIVER == 'ST7789':
-                    if 'state' in mpd_status:
-                        if mpd_status['state'] != 'play':
-                            if dark is False:
-                                img.paste(pause_icons, (0,0), pause_icons)
-                            else:
-                                img.paste(pause_icons_dark, (0,0), pause_icons_dark)
-                        else:
-                            if dark is False:
-                                img.paste(play_icons, (0,0), play_icons)
-                            else:
-                                img.paste(play_icons_dark, (0,0), play_icons_dark)
-                    else:
-                        img.paste(play_icons, (0,0), play_icons)
-                else:
-                    if dark is False:
-                        img.paste(vol_icons, (0,0), vol_icons)
-                    else:
-                        img.paste(vol_icons_dark, (0,0), vol_icons_dark)
-
-
-            if dark is True:
-                bar_col = (100,100,100,225)
-            '''
+        
             top = 20
             if 'artist' in moode_meta:
                 w1, y1 = draw.textsize(moode_meta['artist'], font_m)
@@ -299,23 +259,6 @@ def main():
                 if w3 <= WIDTH:
                     x3 = (WIDTH - w3)//2
                 draw.text((x3, title_top), moode_meta['title'], font=font_l, fill=txt_col)
-
-
-            
-            '''
-            if 'volume' in mpd_status:
-                vol = int(mpd_status['volume'])
-                vol_x = int((vol/100)*(WIDTH - 33))
-                draw.rectangle((5, volume_top, WIDTH-34, volume_top+8), (255,255,255,145))
-                draw.rectangle((5, volume_top, vol_x, volume_top+8), bar_col)
-            if 'elapsed' in  mpd_status:
-                el_time = int(float(mpd_status['elapsed']))
-                if 'duration' in mpd_status:
-                    du_time = int(float(mpd_status['duration']))
-                    dur_x = int((el_time/du_time)*(WIDTH-10))
-                    draw.rectangle((5, time_top, WIDTH-5, time_top + 12), (255,255,255,145))
-                    draw.rectangle((5, time_top, dur_x, time_top + 12), bar_col)
-            '''
         
             if DRIVER == 'ST7735':
                 if FULL == True:
@@ -333,7 +276,21 @@ def main():
 
         client.disconnect()
     else:
-        print('no mpd')
+        draw.rectangle((0,0,240,240), fill=(0,0,0))
+        txt = 'MPD not Active!\nEnsure MPD is running\nThen restart script'
+        mlw, mlh = draw.multiline_textsize(txt, font=font_m, spacing=4)
+        draw.multiline_text(((WIDTH-mlw)//2, 20), txt, fill=(255,255,255), font=font_m, spacing=4, align="center")
+        disp.display(img)
+        if DRIVER == 'ST7735':
+            if FULL == True:
+                im4 = img.resize((160,160), Image.LANCZOS)
+                im3.paste(im4, (0,0))
+            else:
+                im4 = img.resize((128,128), Image.LANCZOS)
+                im3.paste(im4, (16,0))
+            disp.display(im3)
+        elif DRIVER == 'ST7789':
+            disp.display(img)
         #else:
         #    img.paste(bt_back, (0,0))
 
