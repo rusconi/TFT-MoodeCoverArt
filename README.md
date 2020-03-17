@@ -6,6 +6,19 @@ Best with Pimoroni pirate audio boards with 240*240 TFT (ST7789).
 
 Can also be used with a 160*128 ST7735 TFT.
 
+### Variants
+
+There is a basic variant coverdisplay-basic.py that has none off the button, volume or time overlays.
+This file is in the repository
+
+it displays the cover art, artist, album/station and title only
+
+to run from rc.local use:
+
+```
+/usr/bin/python3 /home/pi/TFT-MoodeCoverArt/coverdisplay-basic.py &
+```
+
 ### Assumptions.
 
 **You can SSH into your RPI, enter commands at the shell prompt, and use the nano editor.**
