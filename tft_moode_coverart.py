@@ -1,9 +1,8 @@
 from PIL import Image, ImageDraw, ImageColor, ImageFont, ImageStat
 import subprocess
 import time
-#import json
 import musicpd
-#import os
+import os
 import os.path
 from os import path
 import RPi.GPIO as GPIO
@@ -18,13 +17,18 @@ import yaml
 
 __version__ = "0.0.2"
 
+# get the path of the script
+script_path = os.path.dirname(os.path.abspath( __file__ ))
+# set script path as current directory - 
+os.chdir(script_path)
+
 MODE=0
 OVERLAY=2
 TIMEBAR=1
 
 confile = 'config.yml'
 
-# Read conf.json for user config
+# Read config.yml for user config
 if path.exists(confile):
  
     with open(confile) as config_file:
@@ -34,7 +38,7 @@ if path.exists(confile):
         MODE = displayConf['mode']
         TIMEBAR = displayConf['timebar']
 
-#print(OVERLAY)
+
 
      
 # Standard SPI connections for ST7789
@@ -65,9 +69,6 @@ else:
 
 # Initialize display.
 disp.begin()
-# get the path of the script
-script_path = os.path.dirname(os.path.abspath( __file__ ))
-
 
 
 WIDTH = 240
@@ -337,8 +338,8 @@ def main():
             
             disp.display(img)
 
-            if c == 0:
-                im7 = img.save('dump.jpg')
+            if c == -1:
+                im7 = img.save(script_path+'/dump.jpg')
                 c += 1
 
 
