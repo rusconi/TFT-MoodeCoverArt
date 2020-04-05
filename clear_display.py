@@ -1,39 +1,50 @@
 
-#import ST7735
+
 import ST7789
 from PIL import Image, ImageDraw
+from os import path
+import yaml
 
-# choose between ST7789 and ST7735 driver
-# Uncomment the driver you want, comment out the other
-DRIVER = 'ST7789'
-#DRIVER = 'ST7735'
+# set default config for pirate audio
 
-if DRIVER == 'ST7789':
-        # Standard SPI connections for ST7789
-        # Create ST7789 LCD display class.
-        disp = ST7789.ST7789(
-            port=0,
-            cs=ST7789.BG_SPI_CS_FRONT,  # BG_SPI_CSB_BACK or BG_SPI_CS_FRONT
-            dc=9,
-            backlight=13,               # 18 for back BG slot, 19 for front BG slot.
-            spi_speed_hz=80 * 1000 * 1000
-        )
+MODE=0
+
+OVERLAY=2
+
+confile = 'config.yml'
+
+# Read conf.json for user config
+if path.exists(confile):
+ 
+    with open(confile) as config_file:
+        data = yaml.load(config_file, Loader=yaml.FullLoader)
+        displayConf = data['display']
+        OVERLAY = displayConf['overlay']
+        MODE = displayConf['mode']
 
 
-if DRIVER == 'ST7735':
-    # Create ST7735 LCD display class. If using ST7789, delete the st7735 coding. then uncomment the ST7789
-    disp = ST7735.ST7735(
+# Standard SPI connections for ST7789
+# Create ST7789 LCD display class.
+if MODE == 3:    
+    disp = ST7789.ST7789(
         port=0,
-        cs=0,   #ST7735.BG_SPI_CS_FRONT,  # BG_SPI_CSB_BACK or BG_SPI_CS_FRONT
-        dc=17,
-        #backlight=22,               
-        rst=27,
-        width=128,
-        height=160,
-        rotation=90,
-        invert=False,
-        spi_speed_hz=40000000
+        cs=ST7789.BG_SPI_CS_FRONT,  # GPIO 8, Physical pin 24
+        dc=9,
+        rst=22,
+        backlight=13,               
+        mode=3,
+        rotation=0,
+        spi_speed_hz=80 * 1000 * 1000
+    )   
+else:   
+    disp = ST7789.ST7789(
+        port=0,
+        cs=ST7789.BG_SPI_CS_FRONT,  # GPIO 8, Physical pin 24 
+        dc=9,
+        backlight=13,               
+        spi_speed_hz=80 * 1000 * 1000
     )
+
 
 disp.begin()
 img = Image.new('RGB', (240, 240), color=(0, 0, 0))

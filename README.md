@@ -2,22 +2,43 @@
 
 Based on the look of the pirate audio plugin for mopidy.
 
-Best with Pimoroni pirate audio boards with 240*240 TFT (ST7789).
+Works with Pimoroni pirate audio boards with 240*240 TFT (ST7789), as well as standalone ST7789 boards.
 
-Can also be used with a 160*128 ST7735 TFT.
+![Sample Image](/pics/display.jpg)
 
-### Variants
+### Features.
 
-There is a basic variant coverdisplay-basic.py that has none off the button, volume or time overlays.
-This file is in the repository
+The script will display cover art (where available) for the moode library or radio stations.
 
-it displays the cover art, artist, album/station and title only
+* For the moode library, embedded art will be displayed first, then folder or cover images if there is no embedded art.
+* For radio stations, the moode images are used.
+* If no artwork is found a default image is displayed.
 
-to run from rc.local use:
+Metadata displayed:
+* Artist
+* Album/Radio Station
+* Title
+
+Overlays with a Time bar, Volume bar and Play/Pause, Next and Volume icons to match the Pirate Audio buttons are optional.
+
+The script has a built in test to see if the mpd service is running. This should allow enough delay when 
+used as a service. If a running mpd service is not found after around 30 seconds the script displays the following and stops.
 
 ```
-/usr/bin/python3 /home/pi/TFT-MoodeCoverArt/coverdisplay-basic.py &
+   MPD not Active!
+Ensure MPD is running
+ Then restart script
 ```
+
+**Limitations**
+
+Metadata will only be displayed for Radio Stations and the Library.
+
+For the `Airplay`, `Spotify`, `Bluetooth`, `Squeezelite` and `Dac Input` renderers, different backgrounds will display.
+
+The overlay colours adjust for light and dark artwork, but can be hard to read with some artwork.
+
+The script does not search online for artwork
 
 ### Assumptions.
 
@@ -29,133 +50,79 @@ If your pirate audio board doesn't output anything
 
 Choose "Pimoroni pHAT DAC" or "HiFiBerry DAC" in moode audio config
 
-There is a DAC enable pin—BCM 25— that must be driven high to enable the DAC. You can do this by 
+See the Installation section [**here**](https://github.com/pimoroni/pirate-audio) about gpio pin 25. 
 
-```
-sudo nano /boot/config.txt
-```
-and add the following to the file
-```
-gpio=25=op,dh
-```
 
 ### Preparation.
 
 **Enable SPI pn your RPI**
 
-see here:
-
-[Configuring SPI](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-spi)
+see [**Configuring SPI**](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-spi)
 
 Install these pre-requisites:
 ```
 sudo apt-get update
 sudo apt-get install python3-rpi.gpio python3-spidev python3-pip python3-pil python3-numpy
 sudo pip3 install mediafile
+sudo pip3 install pyyaml
 ```
-Install the TFT driver
+Install the TFT driver.
 
-If using a pirate audio board:
+I have forked the Pimoroni driver and modified it to work with other ST7789 boards. Install it with the following command:
+
 ```
-sudo pip3 install st7789
+sudo pip3 install RPI-ST7789
 ```
-If using an ST7735 TFT
-```
-sudo pip3 install st7735
-```
-It's ok to install both if you want.
 
 ### Install the TFT-MoodeCoverArt script
 
 ```
 cd /home/pi
 git clone https://github.com/rusconi/TFT-MoodeCoverArt.git
-'''
-
-If using a generic ST7735 tft edit the python script
-
-```
-nano /home/pi/TFT-MoodeCoverArt/tft_moode_coverart.py
 ```
 
-change the lines
+### Config File
+
+The default config should work with Pirate Audio boards
+
+The config.yml file can be edited to:
+
+* suit different ST7789 boards
+* set overlay display options
+
+The comments in 'config.yml' should be self explanatory
+
+
+**Make the shell scripts executable:**
+
 ```
-DRIVER = 'ST7789'
-#DRIVER = 'ST7735'
-to
-#DRIVER = 'ST7789'
-DRIVER = 'ST7735'
+chmod u+x *.sh
 ```
 
-**Make the shell control script executable:**
-
-```
-chmod u+x /home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh
 Test the script:
 
 ```
 python3 /home/pi/TFT-MoodeCoverArt/tft_moode_coverart.py
 
+
 Ctrl-c to quit
 ```
 
-**If you want to start the display at boot:**
+**If the script works, you may want to start the display at boot:**
 
-Edit the rc.local file
-
-```
-sudo nano /etc/rc.local
-```
-
-add the following as the last line before *exit 0*
-```
-/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh -s > /dev/null 2>&1
-```
-
-The last few lines of rc.local should look something like this:
+### Install as a service.
 
 ```
-# moOde startup and job processor daemon
-/var/www/command/worker.php > /dev/null 2>&1
-
-# start TFT-Moode-CoverArt
-/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh -s > /dev/null 2>&1
-
-exit 0
-```
-**Note:** The tft_moode_coverart.sh bash script allows you to easily start, 
-restart or stop the python script, even if it is running in the background.
-
-tft_moode_coverart.sh -s (re)starts the script, and
-
-tft_moode_coverart.sh -q stops the script.
-
-The rationale is so that any already running script is stopped and the screen blanked before any restart
-
-To run the script, either:
-```
-cd /home/pi/pi/TFT-MoodeCoverArt
-./tft_moode_coverart.sh
-
-or
-
-/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh
+cd /home/pi/TFT-MoodeCoverArt
+./install_service.sh
 ```
 
-### Potential Issues:
+Follow the prompts.
 
-Incorrect colours on ST7735.
-
-You need to edit the ST7735 driver
+If you wish to remove the script as a service:
 
 ```
-sudo nano /usr/local/lib/python3.7/dist-packages/ST7735/__init__.py
+cd /home/pi/TFT-MoodeCoverArt
+./remove_service.sh
 ```
-change the following line
-```
-ST7735_MADCTL = 0x36
-```
-to
-```
-ST7735_MADCTL = 0x00
-```
+

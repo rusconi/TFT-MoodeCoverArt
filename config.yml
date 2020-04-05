@@ -1,0 +1,15 @@
+display:
+  # Display control overlays: 
+  # 2=Full overlay displayed
+  # 1=Volume icon only.
+  # 0=no overlay displayed
+  overlay: 1
+
+  # Display Time Bar:
+  # 1=time bar displayed
+  # 0=no time bar displayed
+  timebar: 1
+
+  # mode=0 for pirate audio and display boards with cs pin
+  # mode=3 for display boards without cs pin
+  mode: 3
