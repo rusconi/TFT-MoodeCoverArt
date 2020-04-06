@@ -187,7 +187,7 @@ def get_cover(metaDict):
         if 'file' in metaDict:
             if len(metaDict['file']) > 0:
 
-                fp = '/mnt/' + metaDict['file']   
+                fp = '/var/lib/mpd/music/' + metaDict['file']   
                 mf = MediaFile(fp)     
                 if mf.art:
                     cover = Image.open(BytesIO(mf.art))
