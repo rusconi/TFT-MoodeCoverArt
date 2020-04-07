@@ -74,6 +74,8 @@ I have forked the Pimoroni driver and modified it to work with other ST7789 boar
 sudo pip3 install RPI-ST7789
 ```
 
+***Ensure 'Metadata file' is turned on in Moode System Configuration***
+
 ### Install the TFT-MoodeCoverArt script
 
 ```

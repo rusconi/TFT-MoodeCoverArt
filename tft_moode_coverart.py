@@ -65,8 +65,6 @@ else:
 
 
 
-
-
 # Initialize display.
 disp.begin()
 
