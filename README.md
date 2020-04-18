@@ -98,7 +98,7 @@ The comments in 'config.yml' should be self explanatory
 **Make the shell scripts executable:**
 
 ```
-chmod u+x *.sh
+chmod 777 *.sh
 ```
 
 Test the script:
