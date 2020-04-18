@@ -140,7 +140,7 @@ def getMoodeMetadata(filename):
         metaDict['source'] = 'library'
         if 'file' in metaDict:
             if (metaDict['file'].find('http://', 0) > -1) or (metaDict['file'].find('https://', 0) > -1):
-                # set radio stream to9 true
+                # set radio stream to true
                 metaDict['source'] = 'radio'
                 # if radio station has arist and title in one line separated by a hyphen, split into correct keys
                 if metaDict['title'].find(' - ', 0) > -1:
