@@ -248,10 +248,10 @@ def main():
                         if ss < BLANK:
                             ss = ss + 1
                         else:
-                            disp.backlight(False)
+                            disp.set_backlight(False)
                     else:
                         ss = 0
-                        disp.backlight(True)
+                        disp.set_backlight(True)
                 
                 
                 im_stat = ImageStat.Stat(cover) 
