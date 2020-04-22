@@ -1,4 +1,11 @@
-# TFT-MoodeCoverArt
+# TFT-MoodeCoverArt 
+
+*version = "0.0.3" : changes*
+
+* added option to turn off backlight when mpd state = stop (see config file for instructions)
+
+-------------------------------------------------------
+
 
 Based on the look of the pirate audio plugin for mopidy.
 

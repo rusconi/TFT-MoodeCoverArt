@@ -1,3 +1,4 @@
+# version = "0.0.3"
 display:
   # Display control overlays: 
   # 2=Full overlay displayed
@@ -18,4 +19,4 @@ display:
   # back on when play restarted
   # blank=0 screen will not blank when mpd state=stop
   # blank=n screen will blank after roughly n seconds when mpd state=stop
-  blank: 5
+  blank: 0
