@@ -13,3 +13,9 @@ display:
   # mode=0 for pirate audio and display boards with cs pin
   # mode=3 for display boards without cs pin
   mode: 0
+
+  # Turn backlight off when mpd state=stop
+  # back on when play restarted
+  # blank=0 screen will not blank when mpd state=stop
+  # blank=n screen will blank after roughly n seconds when mpd state=stop
+  blank: 5

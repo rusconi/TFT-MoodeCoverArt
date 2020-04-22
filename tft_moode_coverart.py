@@ -25,6 +25,7 @@ os.chdir(script_path)
 MODE=0
 OVERLAY=2
 TIMEBAR=1
+BLANK=0
 
 confile = 'config.yml'
 
@@ -37,6 +38,7 @@ if path.exists(confile):
         OVERLAY = displayConf['overlay']
         MODE = displayConf['mode']
         TIMEBAR = displayConf['timebar']
+        BLANK = displayConf['blank']
 
 
 
@@ -213,6 +215,7 @@ def main():
     c = 0
     p = 0
     k=0
+    ss = 0
     x1 = 20
     x2 = 20
     x3 = 20
@@ -240,6 +243,15 @@ def main():
                 mn = 50
                 img.paste(cover.resize((WIDTH,HEIGHT), Image.LANCZOS).filter(ImageFilter.GaussianBlur).convert('RGB'))
                 
+                if 'state' in mpd_status:
+                    if (mpd_status['state'] == 'stop') and (BLANK != 0):
+                        if ss < BLANK:
+                            ss = ss + 1
+                        else:
+                            disp.backlight(False)
+                    else:
+                        ss = 0
+                        disp.backlight(True)
                 
                 
                 im_stat = ImageStat.Stat(cover) 
