@@ -1,6 +1,7 @@
-# version = "0.0.3"
+# version = "0.0.4"
 display:
-  # Display control overlays: 
+  # Display control overlays:
+  # 3=Artwork only
   # 2=Full overlay displayed
   # 1=Volume icon only.
   # 0=no overlay displayed

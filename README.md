@@ -1,5 +1,9 @@
 # TFT-MoodeCoverArt 
 
+*version = "0.0.4" : changes*
+
+* added option to display cover art only without overlays (see config file for instructions)
+
 *version = "0.0.3" : changes*
 
 * added option to turn off backlight when mpd state = stop (see config file for instructions)
@@ -27,6 +31,8 @@ Metadata displayed:
 * Title
 
 Overlays with a Time bar, Volume bar and Play/Pause, Next and Volume icons to match the Pirate Audio buttons are optional.
+
+There is also an option in config.yml to not display metadata
 
 The script has a built in test to see if the mpd service is running. This should allow enough delay when 
 used as a service. If a running mpd service is not found after around 30 seconds the script displays the following and stops.
