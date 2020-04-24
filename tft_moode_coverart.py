@@ -79,8 +79,6 @@ font_l = ImageFont.truetype(script_path + '/fonts/Roboto-Medium.ttf',30)
 
 
 img = Image.new('RGB', (240, 240), color=(0, 0, 0, 25))
-im3 = Image.new('RGB', (160, 128), color=(0, 0, 0, 25))
-om4 = Image.new('RGB', (128, 128), color=(0, 0, 0, 25))
 
 play_icons = Image.open(script_path + '/images/controls-play.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
 play_icons_dark = Image.open(script_path + '/images/controls-play-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
@@ -215,6 +213,7 @@ def main():
     c = 0
     p = 0
     k=0
+    ol=0
     ss = 0
     x1 = 20
     x2 = 20
@@ -352,7 +351,7 @@ def main():
                         x3 = (WIDTH - w3)//2
                         y3 = (HEIGHT - h3)//2
                         draw.text((x3, y3), txt, font=font_l, fill=txt_col, spacing=6, align="center")
-                
+            
             
             disp.display(img)
 
@@ -362,6 +361,7 @@ def main():
 
 
             time.sleep(1)
+            ol += 1
 
         client.disconnect()
     else:
