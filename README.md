@@ -1,4 +1,7 @@
 # TFT-MoodeCoverArt 
+*version = "0.0.5" : changes*
+
+* radio icons location changed
 
 *version = "0.0.4" : changes*
 
