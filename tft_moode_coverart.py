@@ -170,9 +170,9 @@ def get_cover(metaDict):
 		'Folder.jpg', 'folder.jpg', 'Folder.jpeg', 'folder.jpeg', 'Folder.png', 'folder.png', 'Folder.tif', 'folder.tif', 'Folder.tiff', 'folder.tiff']
     if metaDict['source'] == 'radio':
         if 'coverurl' in metaDict:
-            rc = '/var/www/' + metaDict['coverurl']
+            rc = '/var/local/www/' + metaDict['coverurl']
             if path.exists(rc):
-                if rc != '/var/www/images/default-cover-v6.svg':
+                if rc != '/var/local/www/images/default-cover-v6.svg':
                     cover = Image.open(rc)
 
     elif metaDict['source'] == 'airplay':
