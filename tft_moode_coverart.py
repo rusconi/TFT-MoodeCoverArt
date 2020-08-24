@@ -15,7 +15,7 @@ import yaml
 
 # set default config for pirate audio
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 # get the path of the script
 script_path = os.path.dirname(os.path.abspath( __file__ ))
