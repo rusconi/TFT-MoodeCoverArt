@@ -1,6 +1,10 @@
 # TFT-MoodeCoverArt 
 *version = "0.0.5" : changes*
 
+* added option for text shadow
+
+*version = "0.0.5" : changes*
+
 * radio icons location changed
 
 *version = "0.0.4" : changes*
@@ -107,6 +111,7 @@ The config.yml file can be edited to:
 
 * suit different ST7789 boards
 * set overlay display options
+* display the text with a shadow
 
 The comments in 'config.yml' should be self explanatory
 

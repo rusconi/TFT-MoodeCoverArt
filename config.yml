@@ -1,4 +1,4 @@
-# version = "0.0.4"
+# version = "0.0.6"
 display:
   # Display control overlays:
   # 3=Artwork only
@@ -21,3 +21,11 @@ display:
   # blank=0 screen will not blank when mpd state=stop
   # blank=n screen will blank after roughly n seconds when mpd state=stop
   blank: 0
+
+  # Add shadow to text
+  # Shadow is displayed below and to the right
+  # shadow=0 for no shadow text
+  # shadow=n : n is the shadow pixel offset
+  shadow: 3
+
+

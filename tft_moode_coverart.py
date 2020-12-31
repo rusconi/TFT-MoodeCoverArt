@@ -15,7 +15,7 @@ import yaml
 
 # set default config for pirate audio
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 # get the path of the script
 script_path = os.path.dirname(os.path.abspath( __file__ ))
@@ -26,6 +26,7 @@ MODE=0
 OVERLAY=2
 TIMEBAR=1
 BLANK=0
+SHADE=0
 
 confile = 'config.yml'
 
@@ -39,6 +40,7 @@ if path.exists(confile):
         MODE = displayConf['mode']
         TIMEBAR = displayConf['timebar']
         BLANK = displayConf['blank']
+        SHADE = displayConf['shadow']
 
 
 
@@ -222,6 +224,7 @@ def main():
     volume_top = 184
     time_top = 222
     act_mpd = isServiceActive('mpd')
+    SHADE = displayConf['shadow']
 
     if act_mpd == True:
         while True:
@@ -262,14 +265,17 @@ def main():
                 
                 #txt_col = (255-int(im_mean[0]), 255-int(im_mean[1]), 255-int(im_mean[2]))
                 txt_col = (255,255,255)
+                str_col = (15,15,15)
                 bar_col = (255, 255, 255, 255)
                 dark = False
                 if mn > 175:
                     txt_col = (55,55,55)
+                    str_col = (200,200,200)
                     dark=True
                     bar_col = (100,100,100,225)
                 if mn < 80:
                     txt_col = (200,200,200)
+                    str_col = (55,55,55)
                 
                 if (moode_meta['source'] == 'library') or (moode_meta['source'] == 'radio'):
 
@@ -320,6 +326,10 @@ def main():
                                 x1 = 0
                             if w1 <= WIDTH:
                                 x1 = (WIDTH - w1)//2
+                                
+                            if SHADE != 0:
+                                draw.text((x1+SHADE, top+SHADE), moode_meta['artist'], font=font_m, fill=str_col)
+
                             draw.text((x1, top), moode_meta['artist'], font=font_m, fill=txt_col)
                         
                         top = 35
@@ -331,6 +341,8 @@ def main():
                                 x2 = 0
                             if w2 <= WIDTH:
                                 x2 = (WIDTH - w2)//2
+                            if SHADE != 0:
+                                draw.text((x2+SHADE, top+SHADE), moode_meta['album'], font=font_s, fill=str_col)
                             draw.text((x2, top), moode_meta['album'], font=font_s, fill=txt_col)
 
                         
@@ -341,6 +353,8 @@ def main():
                                 x3 = 0
                             if w3 <= WIDTH:
                                 x3 = (WIDTH - w3)//2
+                            if SHADE != 0:
+                                draw.text((x3+SHADE, title_top+SHADE), moode_meta['title'], font=font_l, fill=str_col)
                             draw.text((x3, title_top), moode_meta['title'], font=font_l, fill=txt_col)
 
 
@@ -350,6 +364,8 @@ def main():
                         w3, h3 = draw.multiline_textsize(txt, font_l, spacing=6)
                         x3 = (WIDTH - w3)//2
                         y3 = (HEIGHT - h3)//2
+                        if SHADE != 0:
+                            draw.text((x3+SHADE, y3+SHADE), txt, font=font_l, fill=str_col)
                         draw.text((x3, y3), txt, font=font_l, fill=txt_col, spacing=6, align="center")
             
             
