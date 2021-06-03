@@ -135,7 +135,7 @@ def getMoodeMetadata(filename):
         i = 0
         while i < len(nowplayingmeta):
             # traverse list converting to a dictionary
-            (key, value) = nowplayingmeta[i].split('=')
+            (key, value) = nowplayingmeta[i].split('=', 1)
             metaDict[key] = value
             i += 1
         
