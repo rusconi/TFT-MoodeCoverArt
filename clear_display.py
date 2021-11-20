@@ -1,4 +1,4 @@
-
+#!/bin/env python3
 
 import ST7789
 from PIL import Image, ImageDraw
@@ -46,6 +46,7 @@ else:
     )
 
 
+# Initialize display.
 disp.begin()
 img = Image.new('RGB', (240, 240), color=(0, 0, 0))
 draw = ImageDraw.Draw(img)
