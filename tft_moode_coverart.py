@@ -286,14 +286,14 @@ def main():
                             if OVERLAY == 2:
                                 if mpd_status['state'] != 'play':
                                     if dark is False:
-                                        img.paste(play_icons, (0,0), pause_icons)
+                                        img.paste(play_icons, (0,0), play_icons)
                                     else:
-                                        img.paste(play_icons_dark, (0,0), pause_icons_dark)
+                                        img.paste(play_icons_dark, (0,0), play_icons_dark)
                                 else:
                                     if dark is False:
-                                        img.paste(pause_icons, (0,0), play_icons)
+                                        img.paste(pause_icons, (0,0), pause_icons)
                                     else:
-                                        img.paste(pause_icons_dark, (0,0), play_icons_dark)
+                                        img.paste(pause_icons_dark, (0,0), pause_icons_dark)
                             elif OVERLAY == 1:
                                 if dark is False:
                                     img.paste(vol_icons, (0,0), vol_icons)
