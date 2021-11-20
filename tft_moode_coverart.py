@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 from PIL import Image, ImageDraw, ImageColor, ImageFont, ImageStat
 import subprocess
 import time
