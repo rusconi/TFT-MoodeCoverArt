@@ -5,10 +5,11 @@ After=mpd.socket mpd.service
  
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/pi/TFT-MoodeCoverArt/tft_moode_coverart.py &
+ExecStart=/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh -s
 #ExecStartPre=/bin/sleep 15
 ExecStop=/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh -q
-Restart=on-abort
+Restart=always
+#Restart=on-abort
  
 [Install]
 WantedBy=multi-user.target 
