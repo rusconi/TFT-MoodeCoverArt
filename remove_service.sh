@@ -13,7 +13,7 @@ do
                 sudo rm /etc/systemd/system/tft-moodecoverart.service
                 sudo systemctl daemon-reload
                 sudo systemctl reset-failed
-				echo -e "\nTFT-MoodeCoverArt removed as a service.\n"
+                echo -e "\nTFT-MoodeCoverArt removed as a service.\n"
                 echo -e "Please reboot the Raspberry Pi.\n"
                 break;;
         [Nn]* ) echo -e "Service not removed \n"; break;;
@@ -35,3 +35,4 @@ do
 done
 
 echo "TFT-MoodeCoverArt service removal complete"
+
