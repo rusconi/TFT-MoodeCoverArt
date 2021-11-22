@@ -1,17 +1,16 @@
 #!/bin/env python3
 
-from PIL import Image, ImageDraw, ImageColor, ImageFont, ImageStat
+from PIL import Image, ImageDraw, ImageColor, ImageFont, ImageStat, ImageFilter
 import subprocess
 import time
 import musicpd
 import os
-import os.path
+import sys
 # import RPi.GPIO as GPIO
 from mediafile import MediaFile
 from io import BytesIO
 from numpy import mean
 import ST7789
-from PIL import ImageFilter
 import yaml
 
 # set default config for pirate audio
@@ -251,14 +250,15 @@ def main():
                 client.connect()  # use MPD_HOST/MPD_PORT
             except KeyboardInterrupt:
                 raise
-            except:
+            except BaseException as e:
+                print(e, file = sys.stderr)
                 time.sleep(2)
                 pass
             else:
                 try:
-                    # moode_meta = get_moode_metadata(filename)
-                    moode_meta = client.currentsong()
-                    # print(moode_meta)
+                    moode_meta = get_moode_metadata(filename)
+                    # FIXME: reading the metadata from MPD does not work for bluetooth input (and maybe others)
+                    # moode_meta = client.currentsong()
 
                     moode_meta["source"] = "library"
                     if "file" in moode_meta:
@@ -282,6 +282,8 @@ def main():
                             moode_meta["source"] = "input"
 
                     mpd_status = client.status()
+                    # Debug info
+                    # print(moode_meta)
                     # print(mpd_status)
                     # print()
 
@@ -289,7 +291,7 @@ def main():
                     covername = get_cover_filepath(moode_meta)
                     if (covername != oldcovername):
                         oldcovername = covername
-                        print("reading cover for: ", covername)
+                        # print("reading cover for: ", covername)
                         cover = get_cover(moode_meta)
                         oldcover = cover
                         im_stat = ImageStat.Stat(cover)
@@ -365,7 +367,6 @@ def main():
                                 if "duration" in mpd_status:
                                     du_time = int(float(mpd_status["duration"]))
                                     dur_x = 5 + int((el_time/du_time)*(WIDTH-10))
-                                    print (el_time, du_time, dur_x)
                                     draw.rectangle((5, time_top, WIDTH-5, time_top + 12), (255,255,255,145))
                                     draw.rectangle((5, time_top, dur_x, time_top + 12), bar_col)
 
@@ -427,7 +428,7 @@ def main():
                 except KeyboardInterrupt:
                     raise
                 except BaseException as e:
-                    print(e)
+                    print(e, file = sys.stderr)
                     time.sleep(2)
 
     else:  # act_mpd != True:
