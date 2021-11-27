@@ -242,6 +242,9 @@ def main():
     cover = None
     oldcover = None
     oldcovername = ""
+    vol = 0
+    oldvol = -1
+    volchanged = 0
 
     if act_mpd == True:
         while True:
@@ -346,15 +349,22 @@ def main():
                                             img.paste(pause_icons_dark, (0,0), pause_icons_dark)
                                 # FIXME: this prevents MPD from detecting buttons state, so we cannot use it
                                 # volume_pressed = GPIO.input(6) or GPIO.input(24)
-                                if (((OVERLAY == 3 or OVERLAY == 1) and "state" in mpd_status and mpd_status["state"] == "play")
-                                        or False): # volume_pressed):
+                                if "volume" in mpd_status:
+                                    vol = int(mpd_status["volume"])
+                                    if ( oldvol != -1 and vol != oldvol):
+                                        volchanged = 5
+                                    oldvol = vol
+
+                                if ((OVERLAY == 3 or OVERLAY == 1) and "state" in mpd_status and mpd_status["state"] == "play") or (OVERLAY == 2 and volchanged > 0):
+                                    if volchanged > 0:
+                                        volchanged -= 1
+
                                     # FIXME: this would draw the volume icon twice, since it is in the play_icons image too!
                                     # if dark is False:
                                     #     img.paste(vol_icons, (0,0), vol_icons)
                                     # else:
                                     #     img.paste(vol_icons_dark, (0,0), vol_icons_dark)
                                     if "volume" in mpd_status:
-                                        vol = int(mpd_status["volume"])
                                         vol_x = 5 + int((vol/100)*(WIDTH - 40))
                                         draw.rectangle((5, volume_top, WIDTH-35, volume_top+8), (255,255,255,145))
                                         draw.rectangle((5, volume_top, vol_x, volume_top+8), bar_col)
@@ -421,7 +431,7 @@ def main():
                         c += 1
 
                     if ("state" in mpd_status and mpd_status["state"] == "play"):
-                        time.sleep(0.25)
+                        time.sleep(0.1)
                     else:
                         time.sleep(0.5)
 
