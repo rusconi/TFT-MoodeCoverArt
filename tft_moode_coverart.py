@@ -12,6 +12,7 @@ from io import BytesIO
 from numpy import mean
 import ST7789
 import yaml
+import urllib.parse
 
 # set default config for pirate audio
 
@@ -109,6 +110,9 @@ def get_moode_metadata(filename):
             (key, value) = nowplayingmeta[i].split("=", 1)
             metaDict[key] = value
             i += 1
+
+        if "coverurl" in metaDict:
+            metaDict["coverurl"] = urllib.parse.unquote(metaDict["coverurl"])
 
     return metaDict
 
