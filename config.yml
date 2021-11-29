@@ -1,8 +1,8 @@
-# version = "0.0.7"
+# version = "0.0.8"
 display:
   # Display control overlays:
   # 3=Full overlay displayed: volume icon+bar and play/pause+next icons (default)
-  # 2=Play/pause+next+volume icons (but no volume bar)
+  # 2=Play/pause+next+volume icons (volume bar is shown briefly when volume changes)
   # 1=Volume icon+volume bar overlay only
   # 0=Artwork only - no overlay at all
   overlay: 3
@@ -13,7 +13,7 @@ display:
   timebar: 1
 
   # Display Text overlay:
-  # 1=text overlay (artist, album, songi title) displayed (default)
+  # 1=text overlay (artist, album, song title) displayed (default)
   # 0=no text displayed
   text: 1
 

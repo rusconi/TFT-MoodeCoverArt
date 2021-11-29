@@ -16,7 +16,7 @@ import urllib.parse
 
 # set default config for pirate audio
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 # get the path of the script
 script_path = os.path.dirname(os.path.abspath( __file__ ))
