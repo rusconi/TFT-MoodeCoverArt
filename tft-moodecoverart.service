@@ -9,6 +9,7 @@ ExecStart=/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh -s
 #ExecStartPre=/bin/sleep 15
 ExecStop=/home/pi/TFT-MoodeCoverArt/tft_moode_coverart.sh -q
 Restart=always
+RestartSec=5
 #Restart=on-abort
  
 [Install]
