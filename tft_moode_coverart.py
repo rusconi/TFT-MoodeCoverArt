@@ -409,7 +409,7 @@ def main():
                             x3 = (WIDTH - w3)//2
                             y3 = (HEIGHT - h3)//2
                             if SHADOW != 0:
-                                draw.text((x3+SHADOW, y3+SHADOW), txt, font=font_l, fill=shd_col)
+                                draw.text((x3+SHADOW, y3+SHADOW), txt, font=font_l, fill=shd_col, spacing=6, align="center")
                             draw.text((x3, y3), txt, font=font_l, fill=txt_col, spacing=6, align="center")
 
                     if c == 0:
