@@ -12,10 +12,11 @@ from numpy import mean
 import ST7789
 from PIL import ImageFilter
 import yaml
+import urllib.parse
 
 # set default config for pirate audio
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 # get the path of the script
 script_path = os.path.dirname(os.path.abspath( __file__ ))
@@ -138,6 +139,8 @@ def getMoodeMetadata(filename):
             (key, value) = nowplayingmeta[i].split('=', 1)
             metaDict[key] = value
             i += 1
+        
+        metaDict['coverurl'] = urllib.parse.unquote(metaDict['coverurl'])
         
         metaDict['source'] = 'library'
         if 'file' in metaDict:

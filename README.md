@@ -1,5 +1,9 @@
 # TFT-MoodeCoverArt 
-*version = "0.0.5" : changes*
+*version = "0.0.7" : changes*
+
+* update for moode 7.6.0 - BUG FIX: URL encoding for radio station logos
+
+*version = "0.0.6" : changes*
 
 * added option for text shadow
 
