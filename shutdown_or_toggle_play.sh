@@ -54,7 +54,9 @@ function wait_shutdown()
 
 	if [[ $VAL == 0 ]]
 	then
-		sudo systemctl stop tft-moodecoverart
+		sudo systemctl stop tft-moodecoverart &
+		sudo mpc vol 0
+		sudo mpc stop
 		# echo "($PPID) $$ power off"
 		sudo poweroff
 	fi
@@ -62,7 +64,7 @@ function wait_shutdown()
 
 if [[ $1 = "--spawn" ]]; then
 	shift
-	wait_shutdown "$*"
+	wait_shutdown "$@"
 	# echo "($PPID) $$ exit after wait_shutdown()"
 	exit 0
 fi
@@ -74,7 +76,7 @@ fi
 
 mpc toggle > /dev/null
 
-"$0" --spawn "$*" &
+"$0" --spawn "$@" &
 
 # sleep 1
 
