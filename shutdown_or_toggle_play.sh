@@ -54,9 +54,8 @@ function wait_shutdown()
 
 	if [[ $VAL == 0 ]]
 	then
-		sudo systemctl stop tft-moodecoverart &
-		sudo mpc vol 0
-		sudo mpc stop
+		sudo pkill -f /var/www/command/watchdog.sh
+		sudo systemctl stop tft-moodecoverart nginx mpd.socket mpd
 		# echo "($PPID) $$ power off"
 		sudo poweroff
 	fi
