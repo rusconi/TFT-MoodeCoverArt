@@ -2,20 +2,18 @@
 
 import ST7789
 from PIL import Image, ImageDraw
-from os import path
+import os
 import yaml
 
-# set default config for pirate audio
+# Set default config for pirate audio
 
 MODE=0
-
 OVERLAY=2
 
 confile = 'config.yml'
 
-# Read conf.json for user config
-if path.exists(confile):
- 
+# Read user config
+if os.path.exists(confile):
     with open(confile) as config_file:
         data = yaml.load(config_file, Loader=yaml.FullLoader)
         displayConf = data['display']
@@ -24,7 +22,7 @@ if path.exists(confile):
 
 
 # Standard SPI connections for ST7789
-# Create ST7789 LCD display class.
+# Create ST7789 LCD display class
 if MODE == 3:    
     disp = ST7789.ST7789(
         port=0,
@@ -45,12 +43,11 @@ else:
         spi_speed_hz=80 * 1000 * 1000
     )
 
-
-# Initialize display.
-disp.begin()
 img = Image.new('RGB', (240, 240), color=(0, 0, 0))
-draw = ImageDraw.Draw(img)
-draw.rectangle((0, 0, 240, 240), (0, 0, 0))
+### draw = ImageDraw.Draw(img)
+### draw.rectangle((0, 0, 240, 240), (0, 0, 0))
+
 disp.display(img)
 
 disp.set_backlight(False)
+
