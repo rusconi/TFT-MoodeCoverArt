@@ -14,14 +14,15 @@ import ST7789
 import yaml
 import urllib.parse
 
-# set default config for pirate audio
 
 __version__ = "0.0.8"
 
-# get the path of the script
+# Get the path of the script
 script_path = os.path.dirname(os.path.abspath( __file__ ))
-# set script path as current directory
+# Set script path as current directory
 os.chdir(script_path)
+
+# Set default config for Pimoroni's pirate audio
 
 OVERLAY=3
 TIMEBAR=1
@@ -33,9 +34,8 @@ BLANK=0
 
 confile = "config.yml"
 
-# Read config.yml for user config
+# Read user config
 if os.path.exists(confile):
-
     with open(confile) as config_file:
         data = yaml.load(config_file, Loader=yaml.FullLoader)
         displayConf = data["display"]
@@ -136,9 +136,8 @@ def get_cover_filepath(metaDict):
         elif metaDict["source"] == "input":
             result = "input"
         else:  # source: library
-            if "file" in metaDict:
-                if len(metaDict["file"]) > 0:
-                    result = "/var/lib/mpd/music/" + metaDict["file"]
+            if "file" in metaDict and len(metaDict["file"].strip()) > 0:
+                result = "/var/lib/mpd/music/" + metaDict["file"]
 
     return result
 
@@ -146,6 +145,7 @@ def get_cover_filepath(metaDict):
 def get_cover(metaDict):
 
     result = df_back
+    coverok = False
     covers = ["Cover.jpg", "cover.jpg", "Cover.jpeg", "cover.jpeg", "Cover.png", "cover.png", "Cover.tif", "cover.tif", "Cover.tiff", "cover.tiff",
             "Folder.jpg", "folder.jpg", "Folder.jpeg", "folder.jpeg", "Folder.png", "folder.png", "Folder.tif", "folder.tif", "Folder.tiff", "folder.tiff"]
 
@@ -167,31 +167,39 @@ def get_cover(metaDict):
         elif metaDict["source"] == "input":
             result = jp_back
         else:  # source: library
-            if "file" in metaDict:
-                if len(metaDict["file"]) > 0:
-                    fp = "/var/lib/mpd/music/" + metaDict["file"]
-                    coverok = False
-                    # depending on cfg., try the embedded / folder's cover 1st
-                    if EMBCOVERPRIO == 1:
+            if "file" in metaDict and len(metaDict["file"].strip()) > 0:
+                fp = "/var/lib/mpd/music/" + metaDict["file"]
+                # depending on cfg., try the embedded / folder's cover 1st
+                if EMBCOVERPRIO == 1:
+                    try:
                         mf = MediaFile(fp)
                         if mf.art:
                             result = Image.open(BytesIO(mf.art)).resize((WIDTH, HEIGHT), Image.LANCZOS).convert("RGB")
                             coverok = True
-                    if not coverok:
-                        for it in covers:
-                            cp = os.path.dirname(fp) + "/" + it
-                            if os.path.exists(cp):
+                    except:
+                        pass
+                if not coverok:
+                    for it in covers:
+                        cp = os.path.dirname(fp) + "/" + it
+                        if os.path.exists(cp):
+                            try:
                                 result = Image.open(cp).resize((WIDTH, HEIGHT), Image.LANCZOS).convert("RGB")
                                 coverok = True
                                 break
-                    if not coverok and EMBCOVERPRIO == 0:
+                            except:
+                                pass
+                if not coverok and EMBCOVERPRIO == 0:
+                    try:
                         mf = MediaFile(fp)
                         if mf.art:
                             result = Image.open(BytesIO(mf.art)).resize((WIDTH, HEIGHT), Image.LANCZOS).convert("RGB")
+                            coverok = True
+                    except:
+                        pass
 
     # return normal and blurred image for cover (tuple)
     resultgauss = result.filter(ImageFilter.GaussianBlur).convert("RGB")
-    return result, resultgauss
+    return result, resultgauss, coverok
 
 
 def main():
@@ -294,9 +302,10 @@ def main():
                     # avoid re-reading the previous image again
                     covername = get_cover_filepath(moode_meta)
                     if (covername != oldcovername):
-                        oldcovername = covername
                         # print("Reading cover for: ", covername)
-                        cover, covergauss = get_cover(moode_meta)
+                        cover, covergauss, coverok = get_cover(moode_meta)
+                        if coverok:
+                            oldcovername = covername
                         im_stat = ImageStat.Stat(cover)
                         im_mean = im_stat.mean
                         mn = mean(im_mean)
