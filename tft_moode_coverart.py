@@ -26,8 +26,8 @@ os.chdir(script_path)
 
 OVERLAY=3
 TIMEBAR=1
-TEXT=1
-SHADOW=3
+TEXT=2
+SHADOW=2
 EMBCOVERPRIO=1
 MODE=0
 BLANK=0
@@ -218,7 +218,7 @@ def main():
     volume_top = 184
     time_top = 222
     cover = None
-    covergauss = None
+    coverblurred = None
     oldcovername = ""
     vol = 0
     oldvol = -1
@@ -303,17 +303,18 @@ def main():
                     covername = get_cover_filepath(moode_meta)
                     if (covername != oldcovername):
                         # print("Reading cover for: ", covername)
-                        cover, covergauss, coverok = get_cover(moode_meta)
+                        cover, coverblurred, coverok = get_cover(moode_meta)
                         if coverok:
                             oldcovername = covername
                         im_stat = ImageStat.Stat(cover)
                         im_mean = im_stat.mean
                         mn = mean(im_mean)
 
-                    if TEXT == 0 or (state and (state != "play")):
+                    show_text = TEXT > 0 and (TEXT == 2 or (state and (state == "play")))
+                    if not show_text:
                         img.paste(cover)
                     else:
-                        img.paste(covergauss)
+                        img.paste(coverblurred)
 
                     # txt_col = (255-int(im_mean[0]), 255-int(im_mean[1]), 255-int(im_mean[2]))
                     txt_col = (255,255,255)
@@ -377,7 +378,7 @@ def main():
                                     draw.rectangle((5, time_top, WIDTH-5, time_top + 12), (255,255,255,145))
                                     draw.rectangle((5, time_top, dur_x, time_top + 12), bar_col)
 
-                        if TEXT == 1 and state == "play":
+                        if show_text:
                             if "artist" in moode_meta:
                                 w1, y1 = draw.textsize(moode_meta["artist"], font_m)
                                 x1 = x1-20

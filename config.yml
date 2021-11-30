@@ -7,21 +7,22 @@ display:
   # 0=Artwork only - no overlay at all
   overlay: 3
 
-  # Display Time Bar:
+  # Display Time Bar overlay:
   # 1=time bar displayed (default)
   # 0=no time bar displayed
   timebar: 1
 
   # Display Text overlay:
-  # 1=text overlay (artist, album, song title) displayed (default)
+  # 2=text overlay (artist, album, song title) always displayed (default)
+  # 1=text overlay (artist, album, song title) displayed only during play state
   # 0=no text displayed
-  text: 1
+  text: 2
 
   # Add shadow to text:
   # Shadow is displayed below and to the right
   # shadow=0 for no shadow text
-  # shadow=n : n is the shadow pixel offset (default: 3)
-  shadow: 3
+  # shadow=n with n>0 being the shadow pixel offset (default: 2)
+  shadow: 2
 
   # Cover search priority (as in moOde Preferences->Library)
   # embcoverprio=1 embedded cover (in media file) priority (default)
@@ -37,4 +38,3 @@ display:
   # blank=0 screen will not blank when mpd state=stop (default)
   # blank=n screen will blank after roughly n seconds when mpd state=stop
   blank: 0
-
