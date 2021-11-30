@@ -1,11 +1,15 @@
 # TFT-MoodeCoverArt 
 *version = "0.0.8" : changes*
 
+* changed the service file installation path, for consistency and to fix the uninstall script which was non-functional
+* new power-off action (to activate press play/pause, and press it again and hold for 5 seconds); requires config `shutdown_or_toggle_play.sh` for the play/pause GPIO button in moode, see below
 * faster start and with less screen blinking
 * some other optimizations to reduce CPU usage and response/update time
 * new overlay mode for greater flexibility (and some others renumbered for clarity)
-* new config options for greater flexibility: text, embcoverprio
+* text and timebar overlays are now configurable independently (and for any overlay mode) for greater flexibility
+* new config option, embcoverprio, to match moode's cover search priority (if that one is changed, change this option here to have consistent covers)
 * invert play/pause icons for clarity
+* changed the text overflow management: text now "travels" fully, appearing from the right until disappearing to the left
 * new choice for displaying text overlays only when state is playing (the default behaviour is to show it always, as before); when it is used, the "crisp" (not blurred) cover image will be shown on pause/stop state
 * small fixes in volume / time bar display for very low values
 * small improvement in text shadow option: for this font and screen sizes, a default value of 2 looks better
@@ -112,9 +116,10 @@ sudo pip3 install RPI-ST7789
 
 Recommended: set "GPIO config" (in Moode System Configuration) with these values:
 * Button 1 (on), PIN 5, CMD: `/home/pi/TFT-MoodeCoverArt/shutdown_or_toggle_play.sh`
-* Button 2 (on), PIN 6, CMD: `/var/www/vol.sh,-dn,2`
+** If the power-off action is not wanted, use CMD: `mpc,toggle` (play/pause)
+* Button 2 (on), PIN 6, CMD: `/var/www/vol.sh,-dn,1`
 * Button 3 (on), PIN 16, CMD: `mpc,next`
-* Button 4 (on), PIN 24, CMD: `/var/www/vol.sh,-up,2`
+* Button 4 (on), PIN 24, CMD: `/var/www/vol.sh,-up,1`
 
 ### Install the TFT-MoodeCoverArt script
 
