@@ -14,12 +14,17 @@ confile = 'config.yml'
 
 # Read user config
 if os.path.exists(confile):
+ 
     with open(confile) as config_file:
         data = yaml.load(config_file, Loader=yaml.FullLoader)
         displayConf = data['display']
         OVERLAY = displayConf['overlay']
         MODE = displayConf['mode']
 
+# Read default cover
+img = Image.new('RGB', (240, 240), color=(0, 0, 0, 25))
+cover = Image.open('images/default-cover-v6.jpg')
+img.paste(cover.resize((240,240), Image.LANCZOS).convert('RGB'))
 
 # Standard SPI connections for ST7789
 # Create ST7789 LCD display class
@@ -43,11 +48,7 @@ else:
         spi_speed_hz=80 * 1000 * 1000
     )
 
-img = Image.new('RGB', (240, 240), color=(0, 0, 0))
-### draw = ImageDraw.Draw(img)
-### draw.rectangle((0, 0, 240, 240), (0, 0, 0))
-
 disp.display(img)
 
-disp.set_backlight(False)
+# disp.set_backlight(True)  # Unnecessary
 
