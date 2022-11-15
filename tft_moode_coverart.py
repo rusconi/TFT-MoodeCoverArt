@@ -83,11 +83,11 @@ font_l = ImageFont.truetype(script_path + '/fonts/Roboto-Medium.ttf',30)
 
 img = Image.new('RGB', (240, 240), color=(0, 0, 0, 25))
 
-play_icons = Image.open(script_path + '/images/controls-play.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-play_icons_dark = Image.open(script_path + '/images/controls-play-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
+pause_icons = Image.open(script_path + '/images/controls-play.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
+pause_icons_dark = Image.open(script_path + '/images/controls-play-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
 
-pause_icons = Image.open(script_path + '/images/controls-pause.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
-pause_icons_dark = Image.open(script_path + '/images/controls-pause-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
+play_icons = Image.open(script_path + '/images/controls-pause.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
+play_icons_dark = Image.open(script_path + '/images/controls-pause-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
 
 vol_icons = Image.open(script_path + '/images/controls-vol.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
 vol_icons_dark = Image.open(script_path + '/images/controls-vol-dark.png').resize((240,240), resample=Image.LANCZOS).convert("RGBA")
