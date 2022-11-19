@@ -1,4 +1,7 @@
 # TFT-MoodeCoverArt 
+*version = "0.0.8" : changes*
+* added config option for switching play and pause icons
+
 *version = "0.0.7" : changes*
 
 * update for moode 7.6.0 - BUG FIX: URL encoding for radio station logos
