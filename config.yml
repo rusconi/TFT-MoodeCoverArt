@@ -1,4 +1,4 @@
-# version = "0.0.6"
+# version = "0.0.8"
 display:
   # Display control overlays:
   # 3=Artwork only
@@ -27,5 +27,12 @@ display:
   # shadow=0 for no shadow text
   # shadow=n : n is the shadow pixel offset
   shadow: 3
+
+  # switch play/ pause button display
+  # [switch of play and pause requested for more intuitive operation;
+  #  original coding kept as this is a personal preference]
+  # ppbutton = 0 for original play pause putton display
+  # ppbutton = 1 for play and pause buttons switched for display
+  ppbutton: 0
 
 
