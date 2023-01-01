@@ -1,5 +1,5 @@
 # TFT-MoodeCoverArt 
-*version = "0.0.8" : changes*
+*version = "0.0.9" : changes*
 * added config option for blanking display on pause 
 
 *version = "0.0.8" : changes*
