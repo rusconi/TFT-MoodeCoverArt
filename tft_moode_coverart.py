@@ -16,7 +16,7 @@ import urllib.parse
 
 # set default config for pirate audio
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 
 # get the path of the script
 script_path = os.path.dirname(os.path.abspath( __file__ ))
@@ -29,6 +29,7 @@ TIMEBAR=1
 BLANK=0
 SHADE=0
 PPBUTTON=0
+PAUSEBLANK=0
 
 confile = 'config.yml'
 
@@ -44,6 +45,7 @@ if path.exists(confile):
         BLANK = displayConf['blank']
         SHADE = displayConf['shadow']
         PPBUTTON = displayConf['ppbutton']
+        PAUSEBLANK = displayConf["pauseblank"]
 
 
 
@@ -261,7 +263,7 @@ def main():
                     img.paste(cover.resize((WIDTH,HEIGHT), Image.LANCZOS).filter(ImageFilter.GaussianBlur).convert('RGB'))
                 
                 if 'state' in mpd_status:
-                    if (mpd_status['state'] == 'stop') and (BLANK != 0):
+                    if ((mpd_status['state'] == 'stop') and (BLANK != 0)) or ((mpd_status['state'] == 'pause') and (BLANK != 0) and (PAUSEBLANK != 0)):
                         if ss < BLANK:
                             ss = ss + 1
                         else:

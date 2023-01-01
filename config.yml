@@ -1,4 +1,4 @@
-# version = "0.0.8"
+# version = "0.0.9"
 display:
   # Display control overlays:
   # 3=Artwork only
@@ -35,4 +35,8 @@ display:
   # ppbutton = 1 for play and pause buttons switched for display
   ppbutton: 0
 
+  # Option for screen to blank on pause
+  # pauseblank = 0 for display to stay on
+  # pauseblank = 1 for display to blank
+  pauseblank: 0
 
