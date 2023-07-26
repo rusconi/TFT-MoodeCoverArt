@@ -1,3 +1,7 @@
+PLEASE NOTE
+
+I no longer use or update these scripts, so I am unable to provide any support or updates
+
 # TFT-MoodeCoverArt 
 *version = "0.0.9" : changes*
 * added config option for blanking display on pause 
